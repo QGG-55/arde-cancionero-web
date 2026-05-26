@@ -7,10 +7,28 @@
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <main>
-      <p>ARDE CREATOR</p>
-      <h1>Cancionero web</h1>
-      <p>La web esta preparada. Publica el cancionero desde ARDE para cargar las canciones.</p>
+    <header class="topbar">
+      <p class="eyebrow">ARDE CREATOR</p>
+      <h1>Cancionero</h1>
+      <input id="search" type="search" placeholder="Buscar cancion" autocomplete="off" />
+    </header>
+    <main class="layout">
+      <nav id="songList" class="song-list" aria-label="Canciones"></nav>
+      <article class="song-view">
+        <div class="song-heading">
+          <div>
+            <p id="songPage" class="song-page"></p>
+            <h2 id="songTitle">Selecciona una cancion</h2>
+            <p id="songAuthor" class="song-author"></p>
+          </div>
+          <div class="mode-switch" aria-label="Vista">
+            <button id="withChordsButton" type="button" class="active">Acordes</button>
+            <button id="lyricsOnlyButton" type="button">Letra</button>
+          </div>
+        </div>
+        <pre id="songBody" class="song-body"></pre>
+      </article>
     </main>
+    <script src="app.js"></script>
   </body>
 </html>
