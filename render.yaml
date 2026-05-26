@@ -1,0 +1,5 @@
+services:
+  - type: web
+    name: arde-cancionero-web
+    runtime: static
+    staticPublishPath: .
