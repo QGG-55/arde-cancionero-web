@@ -1,5 +1,11 @@
 [
   {
+    "id": "arde",
+    "name": "ARDE",
+    "file": "data/arde.json",
+    "count": 156
+  },
+  {
     "id": "rockandpop",
     "name": "ROCKANDPOP",
     "file": "data/rockandpop.json",
