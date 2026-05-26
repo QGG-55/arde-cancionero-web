@@ -7,9 +7,15 @@
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <header class="topbar">
+    <section id="landing" class="landing">
       <p class="eyebrow">ARDE CREATOR</p>
-      <h1>Cancionero</h1>
+      <h1>Cancionero web</h1>
+      <p class="landing-copy">Elige el cancionero que quieres abrir.</p>
+      <div id="songbookChoices" class="songbook-choices"></div>
+    </section>
+    <header class="topbar">
+      <button id="homeButton" class="home-button" type="button">Cancioneros</button>
+      <p id="currentSongbook" class="eyebrow">ARDE CREATOR</p>
       <input id="search" type="search" placeholder="Buscar cancion" autocomplete="off" />
     </header>
     <main class="layout">

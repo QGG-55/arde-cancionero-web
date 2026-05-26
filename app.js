@@ -1,3 +1,7 @@
+const landing = document.querySelector("#landing");
+const choices = document.querySelector("#songbookChoices");
+const homeButton = document.querySelector("#homeButton");
+const currentSongbook = document.querySelector("#currentSongbook");
 const list = document.querySelector("#songList");
 const search = document.querySelector("#search");
 const title = document.querySelector("#songTitle");
@@ -7,24 +11,65 @@ const body = document.querySelector("#songBody");
 const withChordsButton = document.querySelector("#withChordsButton");
 const lyricsOnlyButton = document.querySelector("#lyricsOnlyButton");
 
+let songbooks = [];
 let songs = [];
 let currentIndex = 0;
 let mode = "chords";
 
-fetch("songs.json")
+fetch("manifest.json")
   .then((response) => response.json())
   .then((payload) => {
-    songs = payload;
-    renderList();
-    showSong(0);
+    songbooks = Array.isArray(payload) ? payload : [];
+    renderLanding();
   })
   .catch(() => {
-    list.innerHTML = '<p class="empty">No se pudo cargar el cancionero.</p>';
+    choices.innerHTML = '<p class="empty">No se pudo cargar el cancionero.</p>';
   });
 
 search.addEventListener("input", renderList);
+homeButton.addEventListener("click", showLanding);
 withChordsButton.addEventListener("click", () => setMode("chords"));
 lyricsOnlyButton.addEventListener("click", () => setMode("lyrics"));
+
+function renderLanding() {
+  document.body.classList.remove("app-open");
+  if (!songbooks.length) {
+    choices.innerHTML = '<p class="empty">Todavia no hay cancioneros publicados.</p>';
+    return;
+  }
+
+  choices.replaceChildren(...songbooks.map((songbook) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "songbook-button";
+    button.innerHTML = `<strong>${escapeHtml(songbook.name)}</strong><span>${songbook.count || 0} canciones</span>`;
+    button.addEventListener("click", () => loadSongbook(songbook));
+    return button;
+  }));
+}
+
+function showLanding() {
+  document.body.classList.remove("app-open");
+  landing.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+function loadSongbook(songbook) {
+  fetch(songbook.file)
+    .then((response) => response.json())
+    .then((payload) => {
+      songs = Array.isArray(payload.songs) ? payload.songs : [];
+      currentIndex = 0;
+      search.value = "";
+      currentSongbook.textContent = payload.name || songbook.name || "CANCIONERO";
+      document.body.classList.add("app-open");
+      renderList();
+      showSong(0, false);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    })
+    .catch(() => {
+      choices.innerHTML = '<p class="empty">No se pudo abrir ese cancionero.</p>';
+    });
+}
 
 function renderList() {
   const query = normalize(search.value);
@@ -48,7 +93,7 @@ function renderList() {
   }));
 }
 
-function showSong(index) {
+function showSong(index, shouldScroll = true) {
   currentIndex = index;
   const song = songs[index];
   if (!song) {
@@ -59,6 +104,9 @@ function showSong(index) {
   page.textContent = song.page ? `Pagina ${song.page}` : "";
   renderBody();
   renderList();
+  if (shouldScroll && window.matchMedia("(max-width: 780px)").matches) {
+    document.querySelector(".song-view").scrollIntoView({ behavior: "smooth", block: "start" });
+  }
 }
 
 function setMode(nextMode) {
