@@ -58,7 +58,20 @@ body {
   text-align: left;
 }
 
-.songbook-button strong {
+.songbook-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.songbook-logo {
+  width: clamp(42px, 11vw, 58px);
+  height: clamp(54px, 14vw, 74px);
+  object-fit: contain;
+  flex: 0 0 auto;
+}
+
+.songbook-title strong {
   font-size: clamp(1.8rem, 5vw, 3.2rem);
   line-height: 0.95;
 }
@@ -238,7 +251,7 @@ h2 {
   overflow-wrap: anywhere;
   font-family: Calibri, "Segoe UI", Arial, sans-serif;
   font-size: clamp(1.05rem, 3.8vw, 1.55rem);
-  line-height: 1.22;
+  line-height: 1.36;
 }
 
 .empty {

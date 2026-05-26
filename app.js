@@ -2,7 +2,9 @@ const landing = document.querySelector("#landing");
 const choices = document.querySelector("#songbookChoices");
 const homeButton = document.querySelector("#homeButton");
 const currentSongbook = document.querySelector("#currentSongbook");
+const layout = document.querySelector(".layout");
 const list = document.querySelector("#songList");
+const songView = document.querySelector(".song-view");
 const search = document.querySelector("#search");
 const title = document.querySelector("#songTitle");
 const author = document.querySelector("#songAuthor");
@@ -30,6 +32,7 @@ search.addEventListener("input", renderList);
 homeButton.addEventListener("click", showLanding);
 withChordsButton.addEventListener("click", () => setMode("chords"));
 lyricsOnlyButton.addEventListener("click", () => setMode("lyrics"));
+window.addEventListener("resize", renderList);
 
 function renderLanding() {
   document.body.classList.remove("app-open");
@@ -42,7 +45,12 @@ function renderLanding() {
     const button = document.createElement("button");
     button.type = "button";
     button.className = "songbook-button";
-    button.innerHTML = `<strong>${escapeHtml(songbook.name)}</strong><span>${songbook.count || 0} canciones</span>`;
+    const logos = {
+      arde: "assets/logo-arde.jpg",
+      rockandpop: "assets/logo-rockandpop.png",
+    };
+    const logo = logos[songbook.id] ? `<img class="songbook-logo" src="${logos[songbook.id]}" alt="" />` : "";
+    button.innerHTML = `<span class="songbook-title">${logo}<strong>${escapeHtml(songbook.name)}</strong></span><span>${songbook.count || 0} canciones</span>`;
     button.addEventListener("click", () => loadSongbook(songbook));
     return button;
   }));
@@ -78,19 +86,26 @@ function renderList() {
     .filter(({ song }) => !query || normalize(`${song.title} ${song.author} ${(song.tags || []).join(" ")}`).includes(query));
 
   if (!matches.length) {
+    moveSongView();
     list.innerHTML = '<p class="empty">Sin resultados.</p>';
     return;
   }
 
-  list.replaceChildren(...matches.map(({ song, index }) => {
+  const nodes = [];
+  for (const { song, index } of matches) {
     const button = document.createElement("button");
     button.type = "button";
     button.className = "song-item";
     button.classList.toggle("active", index === currentIndex);
     button.innerHTML = `<strong>${escapeHtml(song.title)}</strong><span>${escapeHtml(song.author || "Sin autor")}</span>`;
     button.addEventListener("click", () => showSong(index));
-    return button;
-  }));
+    nodes.push(button);
+    if (isMobileView() && index === currentIndex) {
+      nodes.push(songView);
+    }
+  }
+  list.replaceChildren(...nodes);
+  moveSongView();
 }
 
 function showSong(index, shouldScroll = true) {
@@ -107,6 +122,16 @@ function showSong(index, shouldScroll = true) {
   if (shouldScroll && window.matchMedia("(max-width: 780px)").matches) {
     document.querySelector(".song-view").scrollIntoView({ behavior: "smooth", block: "start" });
   }
+}
+
+function moveSongView() {
+  if (!isMobileView()) {
+    layout.appendChild(songView);
+  }
+}
+
+function isMobileView() {
+  return window.matchMedia("(max-width: 780px)").matches;
 }
 
 function setMode(nextMode) {
