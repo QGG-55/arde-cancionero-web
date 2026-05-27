@@ -1,14 +1,16 @@
-[
-  {
-    "id": "arde",
-    "name": "ARDE",
-    "file": "data/arde.json",
-    "count": 156
-  },
-  {
-    "id": "rockandpop",
-    "name": "ROCKANDPOP",
-    "file": "data/rockandpop.json",
-    "count": 28
-  }
-]
+{
+  "songbooks": [
+    {
+      "id": "arde",
+      "name": "ARDE",
+      "file": "data/arde.json",
+      "count": 156
+    },
+    {
+      "id": "rockandpop",
+      "name": "ROCKANDPOP",
+      "file": "data/rockandpop.json",
+      "count": 28
+    }
+  ]
+}

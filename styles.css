@@ -146,11 +146,11 @@ h1 {
 
 .filters {
   display: grid;
-  grid-template-columns: minmax(180px, 1fr) minmax(150px, 220px) minmax(150px, 220px);
+  grid-template-columns: minmax(180px, 1fr) auto minmax(150px, 220px) minmax(150px, 220px);
   gap: 8px;
 }
 
-#search, .filters select {
+#search, .filters select, .clear-filters-button {
   width: 100%;
   min-height: 42px;
   border: 1px solid var(--line);
@@ -159,6 +159,47 @@ h1 {
   color: var(--ink);
   padding: 0 12px;
   font: inherit;
+}
+
+.clear-filters-button {
+  cursor: pointer;
+  font-weight: 800;
+  padding: 0 12px;
+}
+
+.selection-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.selection-bar strong {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.selection-bar button {
+  min-height: 34px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: #fff;
+  color: var(--ink);
+  cursor: pointer;
+  padding: 0 10px;
+  font: inherit;
+  font-weight: 800;
+}
+
+.selection-bar button.active {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: #fff;
+}
+
+.selection-bar button:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
 }
 
 .layout {
@@ -194,6 +235,22 @@ body:not(.app-open) .layout {
 .song-item.active {
   background: #f0f6f7;
   box-shadow: inset 4px 0 0 var(--accent);
+}
+
+.song-item.selected {
+  background: #fff8e8;
+  box-shadow: inset 4px 0 0 #111;
+}
+
+.song-item.selected.active {
+  background: #eef6ef;
+}
+
+.song-item.selected::after {
+  content: "Seleccionada";
+  color: #111;
+  font-size: 0.72rem;
+  font-weight: 800;
 }
 
 .song-item strong {
@@ -311,7 +368,55 @@ h2 {
   color: #fff;
 }
 
-.autoscroll-button {
+.transpose-controls {
+  display: inline-grid;
+  grid-template-columns: auto 40px 42px 40px 40px;
+  align-items: center;
+  gap: 0;
+  width: max-content;
+}
+
+.transpose-controls.hidden {
+  display: none;
+}
+
+.transpose-controls span {
+  margin-right: 8px;
+  color: var(--muted);
+  font-weight: 800;
+}
+
+.transpose-controls button,
+.transpose-controls strong {
+  min-height: 40px;
+  border: 1px solid var(--line);
+  background: #fff;
+  color: var(--ink);
+  display: grid;
+  place-items: center;
+  font: inherit;
+  font-weight: 800;
+}
+
+.transpose-controls button {
+  cursor: pointer;
+}
+
+.transpose-controls button:first-of-type {
+  border-radius: 6px 0 0 6px;
+}
+
+.transpose-controls button:last-of-type {
+  border-radius: 0 6px 6px 0;
+}
+
+.transpose-controls strong {
+  border-left: 0;
+  border-right: 0;
+}
+
+.autoscroll-button,
+.pdf-button {
   min-height: 40px;
   border: 1px solid var(--line);
   border-radius: 6px;
@@ -329,6 +434,10 @@ h2 {
   color: #fff;
 }
 
+.pdf-button {
+  color: var(--accent);
+}
+
 .song-body {
   margin: 0;
   overflow-wrap: anywhere;
@@ -343,12 +452,29 @@ h2 {
   line-height: 1.32;
 }
 
+.song-line.chord-line {
+  font-weight: 800;
+}
+
 .song-line {
   min-height: 1.36em;
   white-space: pre-wrap;
 }
 
 .song-line strong {
+  font-weight: 800;
+}
+
+.song-link {
+  margin: 22px 0 0;
+}
+
+.song-link.hidden {
+  display: none;
+}
+
+.song-link a {
+  color: var(--accent);
   font-weight: 800;
 }
 
@@ -368,6 +494,10 @@ h2 {
 
   .filters {
     grid-template-columns: 1fr;
+  }
+
+  .topbar {
+    position: static;
   }
 
   .app-open .layout {
@@ -402,7 +532,13 @@ h2 {
     flex: 1 1 50%;
   }
 
-  .autoscroll-button {
+  .transpose-controls {
+    grid-template-columns: auto 1fr 1fr 1fr 1fr;
+    width: 100%;
+  }
+
+  .autoscroll-button,
+  .pdf-button {
     width: 100%;
   }
 }

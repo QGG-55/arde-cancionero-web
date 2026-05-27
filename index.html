@@ -17,8 +17,15 @@
       <p id="currentSongbook" class="eyebrow">ARDE CREATOR</p>
       <div class="filters">
         <input id="search" type="search" placeholder="Buscar cancion" autocomplete="off" />
+        <button id="clearFiltersButton" class="clear-filters-button" type="button">Borrar</button>
         <select id="authorFilter" aria-label="Autor"></select>
         <select id="tagFilter" aria-label="Etiqueta"></select>
+      </div>
+      <div class="selection-bar">
+        <strong id="selectionCount">0 seleccionadas</strong>
+        <button id="selectedOnlyButton" type="button">Ver selección</button>
+        <button id="selectedPdfButton" type="button">PDF selección</button>
+        <button id="clearSelectionButton" type="button">Limpiar</button>
       </div>
     </header>
     <main class="layout">
@@ -36,9 +43,23 @@
             <button id="lyricsOnlyButton" type="button">Letra</button>
             <button id="withChordsButton" type="button" class="active">Acordes</button>
           </div>
+          <div id="transposeControls" class="transpose-controls" aria-label="Tono">
+            <span>Tono</span>
+            <button id="transposeDownButton" type="button">-</button>
+            <strong id="transposeValue">0</strong>
+            <button id="transposeUpButton" type="button">+</button>
+            <button id="transposeResetButton" type="button">0</button>
+          </div>
           <button id="autoscrollButton" class="autoscroll-button" type="button">Autoscroll</button>
+          <button id="pdfButton" class="pdf-button" type="button">PDF</button>
         </div>
         <div id="songBody" class="song-body"></div>
+        <p id="spotifyLinkWrap" class="song-link hidden">
+          <a id="spotifyLink" href="#" target="_blank" rel="noopener">Escuchar en Spotify</a>
+        </p>
+        <p id="audioLinkWrap" class="song-link hidden">
+          <a id="audioLink" href="#" target="_blank" rel="noopener">Audio de ayuda</a>
+        </p>
       </article>
     </main>
     <script src="app.js"></script>
