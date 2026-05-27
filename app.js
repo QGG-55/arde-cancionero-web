@@ -64,16 +64,26 @@ const NOTE_INDEX = new Map([
   ["SI", 11], ["SI#", 0], ["SIB", 10],
 ]);
 const CHORD_QUALITY_RE = /^(?:m|maj|min|dim|aug|sus|add|M|o|\+|-|[0-9]|[#b()])*$/;
+const FALLBACK_SONGBOOKS = [
+  { id: "arde", name: "ARDE", file: "data/arde.json", count: 156 },
+  { id: "rockandpop", name: "ROCKANDPOP", file: "data/rockandpop.json", count: 28 },
+];
 
+songbooks = [...FALLBACK_SONGBOOKS];
+renderLanding();
+loadSongbookFromHash();
 fetch("manifest.json")
   .then((response) => response.json())
   .then((payload) => {
-    songbooks = Array.isArray(payload) ? payload : (payload.songbooks || []);
+    const publishedSongbooks = Array.isArray(payload) ? payload : (payload.songbooks || []);
+    songbooks = publishedSongbooks.length ? publishedSongbooks : [...FALLBACK_SONGBOOKS];
     renderLanding();
     loadSongbookFromHash();
   })
   .catch(() => {
-    choices.innerHTML = '<p class="empty">No se pudo cargar el cancionero.</p>';
+    songbooks = [...FALLBACK_SONGBOOKS];
+    renderLanding();
+    loadSongbookFromHash();
   });
 
 search.addEventListener("input", renderList);
@@ -117,8 +127,8 @@ function renderLanding() {
   }
 
   choices.replaceChildren(...songbooks.map((songbook) => {
-    const button = document.createElement("button");
-    button.type = "button";
+    const button = document.createElement("a");
+    button.href = `#${songbook.id}`;
     button.className = "songbook-button";
     const logos = {
       arde: "assets/logo-arde.jpg",
@@ -126,8 +136,9 @@ function renderLanding() {
     };
     const logo = logos[songbook.id] ? `<img class="songbook-logo ${escapeHtml(songbook.id)}" src="${logos[songbook.id]}" alt="" />` : "";
     button.innerHTML = `<span class="songbook-title">${logo}<strong>${escapeHtml(songbook.name)}</strong></span><span>${songbook.count || 0} canciones</span>`;
-    button.addEventListener("click", () => {
-      window.location.hash = songbook.id;
+    button.addEventListener("click", (event) => {
+      event.preventDefault();
+      history.pushState(null, "", `#${songbook.id}`);
       loadSongbook(songbook);
     });
     return button;
@@ -144,6 +155,9 @@ function loadSongbookFromHash() {
   const requested = normalize(window.location.hash.replace("#", ""));
   if (!requested) {
     return;
+  }
+  if (!songbooks.length) {
+    songbooks = [...FALLBACK_SONGBOOKS];
   }
   const songbook = songbooks.find((item) => normalize(item.id) === requested);
   if (songbook) {

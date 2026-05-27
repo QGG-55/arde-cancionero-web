@@ -45,8 +45,8 @@ body {
 }
 
 .songbook-button {
-  --songbook-logo-column: clamp(62px, 14vw, 84px);
-  --songbook-logo-gap: 10px;
+  --songbook-logo-column: clamp(50px, 11vw, 66px);
+  --songbook-logo-gap: 8px;
   min-height: 132px;
   border: 1px solid var(--line);
   border-radius: 8px;
@@ -70,15 +70,15 @@ body {
 }
 
 .songbook-logo {
-  width: clamp(42px, 11vw, 58px);
-  height: clamp(54px, 14vw, 74px);
+  width: min(100%, clamp(40px, 10vw, 54px));
+  height: clamp(50px, 12vw, 66px);
   object-fit: contain;
   flex: 0 0 auto;
 }
 
 .songbook-logo.rockandpop {
-  width: clamp(58px, 15vw, 82px);
-  height: clamp(58px, 15vw, 82px);
+  width: min(100%, clamp(50px, 11vw, 66px));
+  height: clamp(50px, 11vw, 66px);
 }
 
 .songbook-title strong {
