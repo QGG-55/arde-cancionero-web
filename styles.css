@@ -45,6 +45,8 @@ body {
 }
 
 .songbook-button {
+  --songbook-logo-column: clamp(62px, 14vw, 84px);
+  --songbook-logo-gap: 10px;
   min-height: 132px;
   border: 1px solid var(--line);
   border-radius: 8px;
@@ -54,16 +56,17 @@ body {
   display: grid;
   align-content: center;
   gap: 8px;
-  padding: 18px;
+  padding: 18px 14px;
   text-align: left;
   text-decoration: none;
   font: inherit;
 }
 
 .songbook-title {
-  display: flex;
+  display: grid;
+  grid-template-columns: var(--songbook-logo-column) minmax(0, 1fr);
   align-items: center;
-  gap: 12px;
+  gap: var(--songbook-logo-gap);
 }
 
 .songbook-logo {
@@ -87,6 +90,10 @@ body {
 .songbook-button span {
   color: var(--muted);
   font-size: 1rem;
+}
+
+.songbook-button > span:not(.songbook-title) {
+  margin-left: calc(var(--songbook-logo-column) + var(--songbook-logo-gap));
 }
 
 .app-open .landing {
