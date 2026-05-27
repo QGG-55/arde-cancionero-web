@@ -44,6 +44,7 @@ let selectedSongIndexes = new Set();
 let selectedOnly = false;
 let swipeStart = null;
 let suppressNextSongClick = false;
+let loadingSongbookId = "";
 
 const NOTE_NAMES = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
 const SOLFEGE_NAMES = ["DO", "DO#", "RE", "RE#", "MI", "FA", "FA#", "SOL", "SOL#", "LA", "LA#", "SI"];
@@ -136,9 +137,13 @@ function renderLanding() {
     };
     const logo = logos[songbook.id] ? `<img class="songbook-logo ${escapeHtml(songbook.id)}" src="${logos[songbook.id]}" alt="" />` : "";
     button.innerHTML = `<span class="songbook-title">${logo}<strong>${escapeHtml(songbook.name)}</strong></span><span>${songbook.count || 0} canciones</span>`;
+    if (songbook.id === loadingSongbookId) {
+      button.setAttribute("aria-busy", "true");
+      button.innerHTML = `<span class="songbook-title">${logo}<strong>${escapeHtml(songbook.name)}</strong></span><span>Abriendo...</span>`;
+    }
     button.addEventListener("click", (event) => {
       event.preventDefault();
-      history.pushState(null, "", `#${songbook.id}`);
+      history.replaceState(null, "", `#${songbook.id}`);
       loadSongbook(songbook);
     });
     return button;
@@ -166,10 +171,21 @@ function loadSongbookFromHash() {
 }
 
 function loadSongbook(songbook) {
+  loadingSongbookId = songbook.id;
+  renderLanding();
   fetch(songbook.file)
-    .then((response) => response.json())
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(`No se encontro ${songbook.file}.`);
+      }
+      return response.json();
+    })
     .then((payload) => {
       songs = Array.isArray(payload.songs) ? payload.songs : [];
+      if (!songs.length) {
+        throw new Error("Ese cancionero no contiene canciones.");
+      }
+      loadingSongbookId = "";
       currentIndex = 0;
       selectedSongIndexes = new Set();
       selectedOnly = false;
@@ -183,8 +199,13 @@ function loadSongbook(songbook) {
       showSong(0, false);
       window.scrollTo({ top: 0, behavior: "smooth" });
     })
-    .catch(() => {
-      choices.innerHTML = '<p class="empty">No se pudo abrir ese cancionero.</p>';
+    .catch((error) => {
+      loadingSongbookId = "";
+      renderLanding();
+      const message = document.createElement("p");
+      message.className = "empty";
+      message.textContent = error.message || "No se pudo abrir ese cancionero.";
+      choices.appendChild(message);
     });
 }
 
