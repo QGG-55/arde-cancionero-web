@@ -70,19 +70,19 @@ const FALLBACK_SONGBOOKS = [
   { id: "rockandpop", name: "ROCKANDPOP", file: "data/rockandpop.json", count: 28 },
 ];
 
-songbooks = [...FALLBACK_SONGBOOKS];
+songbooks = FALLBACK_SONGBOOKS.slice();
 renderLanding();
 loadSongbookFromHash();
 fetch("manifest.json")
   .then((response) => response.json())
   .then((payload) => {
     const publishedSongbooks = Array.isArray(payload) ? payload : (payload.songbooks || []);
-    songbooks = publishedSongbooks.length ? publishedSongbooks : [...FALLBACK_SONGBOOKS];
+    songbooks = publishedSongbooks.length ? publishedSongbooks : FALLBACK_SONGBOOKS.slice();
     renderLanding();
     loadSongbookFromHash();
   })
   .catch(() => {
-    songbooks = [...FALLBACK_SONGBOOKS];
+    songbooks = FALLBACK_SONGBOOKS.slice();
     renderLanding();
     loadSongbookFromHash();
   });
@@ -127,7 +127,7 @@ function renderLanding() {
     return;
   }
 
-  choices.replaceChildren(...songbooks.map((songbook) => {
+  replaceChildren(choices, songbooks.map((songbook) => {
     const button = document.createElement("a");
     button.href = `#${songbook.id}`;
     button.className = "songbook-button";
@@ -142,9 +142,10 @@ function renderLanding() {
       button.innerHTML = `<span class="songbook-title">${logo}<strong>${escapeHtml(songbook.name)}</strong></span><span>Abriendo...</span>`;
     }
     button.addEventListener("click", (event) => {
-      event.preventDefault();
-      history.replaceState(null, "", `#${songbook.id}`);
-      loadSongbook(songbook);
+      if (normalize(window.location.hash.replace("#", "")) === normalize(songbook.id)) {
+        event.preventDefault();
+        loadSongbook(songbook);
+      }
     });
     return button;
   }));
@@ -162,7 +163,7 @@ function loadSongbookFromHash() {
     return;
   }
   if (!songbooks.length) {
-    songbooks = [...FALLBACK_SONGBOOKS];
+    songbooks = FALLBACK_SONGBOOKS.slice();
   }
   const songbook = songbooks.find((item) => normalize(item.id) === requested);
   if (songbook) {
@@ -267,7 +268,7 @@ function renderList() {
       nodes.push(songView);
     }
   }
-  list.replaceChildren(...nodes);
+  replaceChildren(list, nodes);
   moveSongView();
   updateSelectionBar();
 }
@@ -337,18 +338,18 @@ function renderFilters() {
   renderSelect(
     tagFilter,
     "Todas las etiquetas",
-    uniqueValues(songs.flatMap((song) => song.tags || []))
+    uniqueValues(flatMap(songs, (song) => song.tags || []))
   );
 }
 
 function renderSelect(select, label, values) {
   const currentValue = select.value;
-  select.replaceChildren(new Option(label, ""), ...values.map((value) => new Option(value, value)));
+  replaceChildren(select, [new Option(label, "")].concat(values.map((value) => new Option(value, value))));
   select.value = values.includes(currentValue) ? currentValue : "";
 }
 
 function uniqueValues(values) {
-  return [...new Set(values.map((value) => String(value || "").trim()).filter(Boolean))]
+  return Array.from(new Set(values.map((value) => String(value || "").trim()).filter(Boolean)))
     .sort((first, second) => first.localeCompare(second, "es", { sensitivity: "base" }));
 }
 
@@ -397,12 +398,12 @@ function updateSongView() {
   capo.textContent = song.capo ? `Cejilla ${song.capo}` : "";
   if (song.author) {
     const authorChip = makeFilterChip(`[${song.author}]`, "author", song.author);
-    author.replaceChildren(authorChip);
+    replaceChildren(author, [authorChip]);
   } else {
     author.textContent = "";
   }
   const tags = song.tags || [];
-  tagSummary.replaceChildren(...tags.map((tag) => makeFilterChip(tag, "tag", tag)));
+  replaceChildren(tagSummary, tags.map((tag) => makeFilterChip(tag, "tag", tag)));
   page.textContent = song.page ? `Pagina ${song.page}` : "";
   spotifyLinkWrap.classList.toggle("hidden", !song.spotifyUrl);
   if (song.spotifyUrl) {
@@ -497,7 +498,7 @@ function runAutoscroll(timestamp) {
 function renderBody() {
   const song = songs[currentIndex];
   if (!song) {
-    body.replaceChildren();
+    replaceChildren(body, []);
     return;
   }
   const richLines = mode === "lyrics" ? song.lyricLines : song.chordLines;
@@ -507,7 +508,7 @@ function renderBody() {
   if (mode === "chords" && transposeOffset) {
     lines = transposeRichLines(lines, transposeOffset);
   }
-  body.replaceChildren(...lines.map(renderSongLine));
+  replaceChildren(body, lines.map(renderSongLine));
 }
 
 function richTextLines(richLines, plainLines, fallbackLines) {
@@ -544,7 +545,7 @@ function downloadCurrentSongPdf() {
 }
 
 function downloadSelectedSongsPdf() {
-  const selectedEntries = [...selectedSongIndexes]
+  const selectedEntries = Array.from(selectedSongIndexes)
     .sort((first, second) => first - second)
     .map((index) => songs[index])
     .filter(Boolean)
@@ -732,8 +733,7 @@ function transposeRichLines(lines, semitones) {
   return lines.map((runs) => {
     const lineText = Array.isArray(runs) ? runs.map((run) => run.text || "").join("") : "";
     const transposeWholeLine = looksLikeChordLine(lineText);
-    return (runs || []).map((run) => ({
-      ...run,
+    return (runs || []).map((run) => Object.assign({}, run, {
       text: transposeWholeLine
         ? transposeChordText(run.text || "", semitones)
         : transposeInlineChordText(run.text || "", semitones),
@@ -804,6 +804,19 @@ function normalize(value) {
     .normalize("NFD")
     .replace(/[\u0300-\u036f]/g, "")
     .toLowerCase();
+}
+
+function flatMap(values, callback) {
+  return values.reduce((items, value, index) => items.concat(callback(value, index)), []);
+}
+
+function replaceChildren(element, children) {
+  while (element.firstChild) {
+    element.removeChild(element.firstChild);
+  }
+  for (const child of children) {
+    element.appendChild(child);
+  }
 }
 
 function escapeHtml(value) {
