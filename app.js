@@ -72,19 +72,19 @@ const FALLBACK_SONGBOOKS = [
 
 songbooks = FALLBACK_SONGBOOKS.slice();
 renderLanding();
-loadSongbookFromHash();
+loadRequestedSongbook();
 fetch("manifest.json")
   .then((response) => response.json())
   .then((payload) => {
     const publishedSongbooks = Array.isArray(payload) ? payload : (payload.songbooks || []);
     songbooks = publishedSongbooks.length ? publishedSongbooks : FALLBACK_SONGBOOKS.slice();
     renderLanding();
-    loadSongbookFromHash();
+    loadRequestedSongbook();
   })
   .catch(() => {
     songbooks = FALLBACK_SONGBOOKS.slice();
     renderLanding();
-    loadSongbookFromHash();
+    loadRequestedSongbook();
   });
 
 search.addEventListener("input", renderList);
@@ -118,7 +118,7 @@ transposeResetButton.addEventListener("click", () => {
 autoscrollButton.addEventListener("click", toggleAutoscroll);
 pdfButton.addEventListener("click", downloadCurrentSongPdf);
 window.addEventListener("resize", renderList);
-window.addEventListener("hashchange", loadSongbookFromHash);
+window.addEventListener("hashchange", loadRequestedSongbook);
 
 function renderLanding() {
   document.body.classList.remove("app-open");
@@ -129,7 +129,7 @@ function renderLanding() {
 
   replaceChildren(choices, songbooks.map((songbook) => {
     const button = document.createElement("a");
-    button.href = `#${songbook.id}`;
+    button.href = `?songbook=${encodeURIComponent(songbook.id)}`;
     button.className = "songbook-button";
     const logos = {
       arde: "assets/logo-arde.jpg",
@@ -142,10 +142,13 @@ function renderLanding() {
       button.innerHTML = `<span class="songbook-title">${logo}<strong>${escapeHtml(songbook.name)}</strong></span><span>Abriendo...</span>`;
     }
     button.addEventListener("click", (event) => {
-      if (normalize(window.location.hash.replace("#", "")) === normalize(songbook.id)) {
-        event.preventDefault();
-        loadSongbook(songbook);
+      event.preventDefault();
+      const nextUrl = `?songbook=${encodeURIComponent(songbook.id)}&v=landing6`;
+      if (window.location.search !== nextUrl) {
+        window.location.href = nextUrl;
+        return;
       }
+      loadSongbook(songbook);
     });
     return button;
   }));
@@ -157,8 +160,8 @@ function showLanding() {
   landing.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
-function loadSongbookFromHash() {
-  const requested = normalize(window.location.hash.replace("#", ""));
+function loadRequestedSongbook() {
+  const requested = normalize(requestedSongbookId());
   if (!requested) {
     return;
   }
@@ -169,6 +172,14 @@ function loadSongbookFromHash() {
   if (songbook) {
     loadSongbook(songbook);
   }
+}
+
+function requestedSongbookId() {
+  const searchMatch = window.location.search.match(/[?&]songbook=([^&]+)/);
+  if (searchMatch) {
+    return decodeURIComponent(searchMatch[1].replace(/\+/g, " "));
+  }
+  return window.location.hash.replace("#", "");
 }
 
 function loadSongbook(songbook) {
