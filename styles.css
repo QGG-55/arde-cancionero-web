@@ -71,7 +71,13 @@ body {
   flex: 0 0 auto;
 }
 
+.songbook-logo.rockandpop {
+  width: clamp(58px, 15vw, 82px);
+  height: clamp(58px, 15vw, 82px);
+}
+
 .songbook-title strong {
+  color: #000;
   font-size: clamp(1.8rem, 5vw, 3.2rem);
   line-height: 0.95;
 }
@@ -108,6 +114,7 @@ body {
 }
 
 .home-button {
+  display: none;
   width: max-content;
   min-height: 34px;
   border: 1px solid var(--line);
@@ -137,7 +144,13 @@ h1 {
   line-height: 1;
 }
 
-#search {
+.filters {
+  display: grid;
+  grid-template-columns: minmax(180px, 1fr) minmax(150px, 220px) minmax(150px, 220px);
+  gap: 8px;
+}
+
+#search, .filters select {
   width: 100%;
   min-height: 42px;
   border: 1px solid var(--line);
@@ -152,6 +165,11 @@ h1 {
   display: grid;
   grid-template-columns: minmax(230px, 32%) 1fr;
   min-height: calc(100vh - 122px);
+}
+
+body:not(.app-open) .topbar,
+body:not(.app-open) .layout {
+  display: none;
 }
 
 .song-list {
@@ -188,6 +206,31 @@ h1 {
   font-size: 0.82rem;
 }
 
+.song-item .item-tags,
+.song-item .item-author {
+  color: var(--accent);
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.filter-chip {
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--accent);
+  cursor: pointer;
+  display: inline;
+  padding: 0;
+  font: inherit;
+  font-weight: 800;
+  text-align: left;
+}
+
+.filter-chip:hover,
+.filter-chip:focus-visible {
+  text-decoration: underline;
+}
+
 .song-view {
   min-width: 0;
   padding: 20px clamp(16px, 4vw, 40px) 40px;
@@ -220,6 +263,29 @@ h2 {
   font-style: italic;
 }
 
+.song-capo {
+  margin: 0 0 6px;
+  color: var(--accent);
+  font-size: 0.96rem;
+  font-weight: 800;
+}
+
+.song-author .filter-chip {
+  color: var(--muted);
+  font-style: italic;
+}
+
+.song-tags {
+  margin: 8px 0 0;
+  color: var(--accent);
+  font-size: 0.86rem;
+  font-weight: 800;
+}
+
+.song-tags .filter-chip + .filter-chip {
+  margin-left: 8px;
+}
+
 .mode-switch {
   display: inline-flex;
   flex: 0 0 auto;
@@ -245,13 +311,45 @@ h2 {
   color: #fff;
 }
 
+.autoscroll-button {
+  min-height: 40px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: #fff;
+  color: var(--ink);
+  cursor: pointer;
+  padding: 0 14px;
+  font: inherit;
+  font-weight: 800;
+}
+
+.autoscroll-button.active {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: #fff;
+}
+
 .song-body {
   margin: 0;
-  white-space: pre-wrap;
   overflow-wrap: anywhere;
   font-family: Calibri, "Segoe UI", Arial, sans-serif;
   font-size: clamp(1.05rem, 3.8vw, 1.55rem);
   line-height: 1.36;
+}
+
+.song-body.chords-mode {
+  font-family: Consolas, "Courier New", monospace;
+  font-size: clamp(0.95rem, 3.4vw, 1.34rem);
+  line-height: 1.32;
+}
+
+.song-line {
+  min-height: 1.36em;
+  white-space: pre-wrap;
+}
+
+.song-line strong {
+  font-weight: 800;
 }
 
 .empty {
@@ -266,6 +364,10 @@ h2 {
 
   .songbook-button {
     min-height: 112px;
+  }
+
+  .filters {
+    grid-template-columns: 1fr;
   }
 
   .app-open .layout {
@@ -298,5 +400,9 @@ h2 {
 
   .mode-switch button {
     flex: 1 1 50%;
+  }
+
+  .autoscroll-button {
+    width: 100%;
   }
 }

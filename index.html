@@ -9,14 +9,17 @@
   <body>
     <section id="landing" class="landing">
       <p class="eyebrow">ARDE CREATOR</p>
-      <h1>Cancionero web</h1>
       <p class="landing-copy">Elige el cancionero que quieres abrir.</p>
       <div id="songbookChoices" class="songbook-choices"></div>
     </section>
     <header class="topbar">
       <button id="homeButton" class="home-button" type="button">Cancioneros</button>
       <p id="currentSongbook" class="eyebrow">ARDE CREATOR</p>
-      <input id="search" type="search" placeholder="Buscar cancion" autocomplete="off" />
+      <div class="filters">
+        <input id="search" type="search" placeholder="Buscar cancion" autocomplete="off" />
+        <select id="authorFilter" aria-label="Autor"></select>
+        <select id="tagFilter" aria-label="Etiqueta"></select>
+      </div>
     </header>
     <main class="layout">
       <nav id="songList" class="song-list" aria-label="Canciones"></nav>
@@ -25,14 +28,17 @@
           <div>
             <p id="songPage" class="song-page"></p>
             <h2 id="songTitle">Selecciona una cancion</h2>
+            <p id="songCapo" class="song-capo"></p>
             <p id="songAuthor" class="song-author"></p>
+            <p id="songTags" class="song-tags"></p>
           </div>
           <div class="mode-switch" aria-label="Vista">
             <button id="lyricsOnlyButton" type="button">Letra</button>
             <button id="withChordsButton" type="button" class="active">Acordes</button>
           </div>
+          <button id="autoscrollButton" class="autoscroll-button" type="button">Autoscroll</button>
         </div>
-        <pre id="songBody" class="song-body"></pre>
+        <div id="songBody" class="song-body"></div>
       </article>
     </main>
     <script src="app.js"></script>
