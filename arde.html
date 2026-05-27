@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ARDE Cancionero</title>
+    <link rel="stylesheet" href="styles.css?v=20260527-landing7" />
+  </head>
+  <body class="app-open standalone-open" data-songbook-file="data/arde.json">
+    <header class="topbar">
+      <a class="home-button" href="index.html?v=landing7">Cancioneros</a>
+      <p id="currentSongbook" class="eyebrow">ARDE</p>
+      <div class="filters">
+        <input id="search" type="search" placeholder="Buscar cancion" autocomplete="off" />
+        <button id="clearFiltersButton" class="clear-filters-button" type="button">Borrar</button>
+        <select id="authorFilter" aria-label="Autor"></select>
+        <select id="tagFilter" aria-label="Etiqueta"></select>
+      </div>
+      <div class="selection-bar">
+        <strong id="selectionCount">0 canciones</strong>
+      </div>
+    </header>
+    <main class="layout">
+      <nav id="songList" class="song-list" aria-label="Canciones"></nav>
+      <article class="song-view">
+        <div class="song-heading">
+          <div>
+            <p id="songPage" class="song-page"></p>
+            <h2 id="songTitle">Cargando cancionero...</h2>
+            <p id="songCapo" class="song-capo"></p>
+            <p id="songAuthor" class="song-author"></p>
+            <p id="songTags" class="song-tags"></p>
+          </div>
+          <div class="mode-switch" aria-label="Vista">
+            <button id="lyricsOnlyButton" type="button">Letra</button>
+            <button id="withChordsButton" type="button" class="active">Acordes</button>
+          </div>
+        </div>
+        <div id="songBody" class="song-body"></div>
+      </article>
+    </main>
+    <script src="songbook.js?v=20260527-landing7"></script>
+  </body>
+</html>
