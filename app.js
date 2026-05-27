@@ -68,7 +68,7 @@ const CHORD_QUALITY_RE = /^(?:m|maj|min|dim|aug|sus|add|M|o|\+|-|[0-9]|[#b()])*$
 fetch("manifest.json")
   .then((response) => response.json())
   .then((payload) => {
-    songbooks = Array.isArray(payload) ? payload : [];
+    songbooks = Array.isArray(payload) ? payload : (payload.songbooks || []);
     renderLanding();
     loadSongbookFromHash();
   })
