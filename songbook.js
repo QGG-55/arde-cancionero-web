@@ -148,6 +148,9 @@
         showSong(Number(this.getAttribute("data-index")));
       };
       list.appendChild(button);
+      if (item.index === currentIndex) {
+        list.appendChild(songView);
+      }
     }
   }
 
