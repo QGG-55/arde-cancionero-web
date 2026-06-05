@@ -1,0 +1,555 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ARDE MUSIC | AL ESTAR EN LA PRESENCIA</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --bg: #f6f1e8;
+        --paper: #fffdf8;
+        --ink: #17191f;
+        --muted: #5d6574;
+        --line: #d9dde5;
+        --accent: #a83d4a;
+        --accent-soft: #f4e3e4;
+        --chip: #ede8dc;
+      }
+
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        font-family: Calibri, "Segoe UI", Arial, sans-serif;
+        color: var(--ink);
+        background:
+          radial-gradient(circle at top left, rgba(168, 61, 74, 0.10), transparent 34%),
+          radial-gradient(circle at top right, rgba(17, 25, 31, 0.06), transparent 32%),
+          var(--bg);
+      }
+
+      .shell {
+        max-width: 1320px;
+        margin: 0 auto;
+        padding: 22px;
+      }
+
+      .hero {
+        display: grid;
+        gap: 14px;
+        grid-template-columns: minmax(0, 1.35fr) minmax(280px, 0.65fr);
+        align-items: stretch;
+        margin-bottom: 18px;
+      }
+
+      .hero-card,
+      .panel {
+        background: var(--paper);
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        box-shadow: 0 18px 44px rgba(20, 25, 32, 0.08);
+      }
+
+      .hero-copy {
+        padding: 28px;
+      }
+
+      .eyebrow {
+        margin: 0 0 10px;
+        color: var(--accent);
+        font-weight: 800;
+        font-size: 0.78rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      h1 {
+        margin: 0 0 8px;
+        font-size: clamp(2rem, 5vw, 4.4rem);
+        line-height: 0.96;
+      }
+
+      .lede {
+        margin: 0;
+        max-width: 64ch;
+        color: var(--muted);
+        font-size: 1.02rem;
+        line-height: 1.6;
+      }
+
+      .hero-card {
+        padding: 22px;
+        display: grid;
+        gap: 14px;
+        align-content: center;
+      }
+
+      .hero-card h2,
+      .panel h2,
+      .panel h3 {
+        margin: 0;
+      }
+
+      .meta-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+      }
+
+      .meta-chip {
+        display: grid;
+        gap: 4px;
+        padding: 12px 14px;
+        border-radius: 14px;
+        background: var(--chip);
+      }
+
+      .meta-chip span {
+        font-size: 0.75rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+
+      .meta-chip strong {
+        font-size: 1rem;
+      }
+
+      .workspace {
+        display: grid;
+        grid-template-columns: minmax(280px, 0.78fr) minmax(0, 1.22fr);
+        gap: 14px;
+      }
+
+      .panel {
+        padding: 18px;
+      }
+
+      .searchbox {
+        display: grid;
+        gap: 12px;
+      }
+
+      .searchbox input {
+        width: 100%;
+        min-height: 46px;
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        padding: 0 14px;
+        font: inherit;
+        background: #fff;
+      }
+
+      .song-result {
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        padding: 14px;
+        background: linear-gradient(180deg, #fff, #faf7f0);
+      }
+
+      .song-result h3 {
+        font-size: 1.1rem;
+        margin-bottom: 6px;
+      }
+
+      .song-result p {
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.45;
+      }
+
+      .chip-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 12px;
+      }
+
+      .chip {
+        padding: 6px 10px;
+        border-radius: 999px;
+        background: var(--accent-soft);
+        color: var(--accent);
+        font-size: 0.78rem;
+        font-weight: 800;
+      }
+
+      .preview-header {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 12px;
+        margin-bottom: 18px;
+      }
+
+      .preview-header h2 {
+        font-size: clamp(1.5rem, 4vw, 2.5rem);
+        line-height: 1.02;
+        margin-top: 2px;
+      }
+
+      .preview-header p {
+        margin: 0;
+        color: var(--muted);
+      }
+
+      .badge-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        align-content: flex-start;
+      }
+
+      .badge {
+        padding: 8px 10px;
+        border-radius: 999px;
+        border: 1px solid var(--line);
+        background: #fff;
+        font-size: 0.8rem;
+        font-weight: 700;
+      }
+
+      .body-card {
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        overflow: hidden;
+        background: #fff;
+      }
+
+      .body-card .section-head {
+        padding: 14px 16px;
+        background: #f4f5f7;
+        border-bottom: 1px solid var(--line);
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        color: var(--muted);
+        font-size: 0.9rem;
+      }
+
+      .body {
+        padding: 18px 16px 20px;
+      }
+
+      .row {
+        display: grid;
+        gap: 8px;
+        margin-bottom: 16px;
+      }
+
+      .row.chords {
+        padding-bottom: 2px;
+      }
+
+      .chord-line {
+        position: relative;
+        min-height: 26px;
+        font-family: "Courier New", Consolas, monospace;
+        font-size: 0.95rem;
+        line-height: 1;
+      }
+
+      .chord-token {
+        position: absolute;
+        top: 0;
+        transform: translateX(-2px);
+        font-weight: 800;
+        color: #1d2430;
+        letter-spacing: 0.02em;
+        white-space: nowrap;
+      }
+
+      .lyric-line {
+        font-size: 1.16rem;
+        line-height: 1.45;
+      }
+
+      .import-note {
+        margin-top: 14px;
+        padding: 12px 14px;
+        border-left: 4px solid var(--accent);
+        background: #fbf7f7;
+        border-radius: 10px;
+        color: var(--muted);
+      }
+
+      .small {
+        font-size: 0.88rem;
+      }
+
+      @media (max-width: 980px) {
+        .hero,
+        .workspace {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 700px) {
+        .shell {
+          padding: 14px;
+        }
+
+        .hero-copy,
+        .panel,
+        .hero-card {
+          padding: 16px;
+        }
+
+        .meta-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="shell">
+      <section class="hero">
+        <article class="hero-card hero-copy">
+          <p class="eyebrow">ARDE MUSIC | Vista web</p>
+          <h1>AL ESTAR EN LA PRESENCIA</h1>
+          <p class="lede">
+            Esta es la copia HTML de ejemplo para ver cómo se mostraría la canción 7 dentro de tu
+            aplicación web. La fuente viene de PowerPoint en una sola columna, la vista móvil se
+            mantiene en una columna y la exportación a PDF queda preparada para dos columnas.
+          </p>
+        </article>
+
+        <aside class="hero-card">
+          <p class="eyebrow">Importación</p>
+          <div class="meta-grid">
+            <div class="meta-chip">
+              <span>Fuente</span>
+              <strong>1 columna</strong>
+            </div>
+            <div class="meta-chip">
+              <span>Vista móvil</span>
+              <strong>1 columna</strong>
+            </div>
+            <div class="meta-chip">
+              <span>PDF</span>
+              <strong>2 columnas</strong>
+            </div>
+            <div class="meta-chip">
+              <span>Bloques</span>
+              <strong>1 bloque</strong>
+            </div>
+          </div>
+        </aside>
+      </section>
+
+      <section class="workspace">
+        <aside class="panel">
+          <div class="searchbox">
+            <div>
+              <p class="eyebrow">Buscar</p>
+              <input type="search" value="AL ESTAR EN LA PRESENCIA" aria-label="Buscar canción" />
+            </div>
+
+            <div class="song-result">
+              <h3>AL ESTAR EN LA PRESENCIA</h3>
+              <p>HAKUNA | Página 7 | Detectada en el importador ARDE MUSIC.</p>
+              <div class="chip-row">
+                <span class="chip">#alabanza</span>
+                <span class="chip">#presencia</span>
+                <span class="chip">#adoracion</span>
+              </div>
+            </div>
+          </div>
+        </aside>
+
+        <section class="panel">
+          <header class="preview-header">
+            <div>
+              <p class="eyebrow">Vista previa de canción</p>
+              <h2>AL ESTAR EN LA PRESENCIA</h2>
+              <p>HAKUNA | Página 7 | Layout origen 1 / vista 1 / PDF 2</p>
+            </div>
+            <div class="badge-row">
+              <span class="badge">Origen 1</span>
+              <span class="badge">Vista 1</span>
+              <span class="badge">PDF 2</span>
+              <span class="badge">43 líneas</span>
+            </div>
+          </header>
+
+          <article class="body-card">
+            <div class="section-head">
+              <span>Bloque 1</span>
+              <span>x 387018 | y 117475 | layout: default</span>
+            </div>
+            <div class="body" id="body"></div>
+          </article>
+
+          <p class="import-note small">
+            La importación ha detectado que el PPT no declara numCol=2 en esta canción, por eso
+            se conserva como origen 1 columna. Aun así, el modelo ya guarda exportColumns=2 para
+            preparar el PDF final.
+          </p>
+        </section>
+      </section>
+    </main>
+
+    <script>
+      const song = {
+        rows: [
+          {
+            kind: "chords",
+            chords: [
+              { text: "DO", start: 5, relativeStart: 0.0877 },
+              { text: "MIm7", start: 21, relativeStart: 0.3684 },
+              { text: "LAm", start: 48, relativeStart: 0.8421 },
+              { text: "LAm7", start: 53, relativeStart: 0.9298 },
+            ],
+          },
+          { kind: "lyrics", text: "Al estar en la presencia de tu divinidad" },
+          {
+            kind: "chords",
+            chords: [
+              { text: "FA", start: 16, relativeStart: 0.2388 },
+              { text: "REm", start: 36, relativeStart: 0.5373 },
+              { text: "SOL", start: 58, relativeStart: 0.8657 },
+              { text: "SOL4", start: 63, relativeStart: 0.9403 },
+            ],
+          },
+          { kind: "lyrics", text: "al contemplar la hermosura de tu santidad" },
+          {
+            kind: "chords",
+            chords: [
+              { text: "DO", start: 0, relativeStart: 0.0 },
+              { text: "MI7", start: 21, relativeStart: 0.5 },
+              { text: "LAm", start: 39, relativeStart: 0.9286 },
+            ],
+          },
+          { kind: "lyrics", text: "mi espíritu se alegra en tu majestad" },
+          {
+            kind: "chords",
+            chords: [
+              { text: "FA", start: 6, relativeStart: 0.25 },
+              { text: "REm", start: 21, relativeStart: 0.875 },
+            ],
+          },
+          { kind: "lyrics", text: "te adoro a ti" },
+          { kind: "chords", chords: [{ text: "SOL", start: 9, relativeStart: 0.0 }] },
+          { kind: "lyrics", text: "te adoro a ti" },
+          {
+            kind: "chords",
+            chords: [
+              { text: "DO", start: 14, relativeStart: 0.2456 },
+              { text: "MIm7", start: 29, relativeStart: 0.5088 },
+              { text: "LAm", start: 47, relativeStart: 0.8246 },
+              { text: "LAm7", start: 53, relativeStart: 0.9298 },
+            ],
+          },
+          { kind: "lyrics", text: "Cuando veo la grandeza de tu dulce amor" },
+          {
+            kind: "chords",
+            chords: [
+              { text: "FA", start: 14, relativeStart: 0.2373 },
+              { text: "REm", start: 29, relativeStart: 0.4915 },
+              { text: "SOL", start: 49, relativeStart: 0.8305 },
+              { text: "SOL4", start: 55, relativeStart: 0.9322 },
+            ],
+          },
+          { kind: "lyrics", text: "y compruebo la pureza de tu corazón" },
+          {
+            kind: "chords",
+            chords: [
+              { text: "DO", start: 8, relativeStart: 0.1739 },
+              { text: "MI7", start: 25, relativeStart: 0.5435 },
+              { text: "LAm", start: 43, relativeStart: 0.9348 },
+            ],
+          },
+          { kind: "lyrics", text: "mi espíritu se alegra en tu majestad" },
+          {
+            kind: "chords",
+            chords: [
+              { text: "FA", start: 8, relativeStart: 0.32 },
+              { text: "REm", start: 22, relativeStart: 0.88 },
+            ],
+          },
+          { kind: "lyrics", text: "te adoro a ti" },
+          { kind: "chords", chords: [{ text: "SOL", start: 8, relativeStart: 0.0 }] },
+          { kind: "lyrics", text: "te adoro a ti" },
+          {
+            kind: "chords",
+            chords: [
+              { text: "DO", start: 9, relativeStart: 0.125 },
+              { text: "LAm", start: 59, relativeStart: 0.8194 },
+              { text: "LAm7", start: 68, relativeStart: 0.9444 },
+            ],
+          },
+          { kind: "lyrics", text: "Y al estar aquí, delante de ti, te adoraré." },
+          {
+            kind: "chords",
+            chords: [
+              { text: "REm", start: 19, relativeStart: 0.2533 },
+              { text: "FA", start: 34, relativeStart: 0.4533 },
+              { text: "SOL", start: 56, relativeStart: 0.7467 },
+              { text: "SOL4", start: 70, relativeStart: 0.9333 },
+            ],
+          },
+          { kind: "lyrics", text: "Postrado ante ti, mi corazón te adora oh Dios." },
+          { kind: "chords", chords: [{ text: "DO", start: 23, relativeStart: 0.0 }] },
+          { kind: "lyrics", text: "Y siempre quiero estar," },
+          {
+            kind: "chords",
+            chords: [
+              { text: "MI7", start: 5, relativeStart: 0.1087 },
+              { text: "FA", start: 22, relativeStart: 0.4783 },
+              { text: "FAm", start: 43, relativeStart: 0.9348 },
+            ],
+          },
+          { kind: "lyrics", text: "Para adorar, y contemplar, tu santidad" },
+          {
+            kind: "chords",
+            chords: [
+              { text: "DO", start: 7, relativeStart: 0.1373 },
+              { text: "SOL", start: 22, relativeStart: 0.4314 },
+              { text: "FA", start: 41, relativeStart: 0.8039 },
+              { text: "DO", start: 49, relativeStart: 0.9608 },
+            ],
+          },
+          { kind: "lyrics", text: "Te adoro a ti Señor, te adoro a ti." },
+          { kind: "lyrics", text: "(BIS)" },
+          {
+            kind: "chords",
+            chords: [
+              { text: "DO", start: 7, relativeStart: 0.1373 },
+              { text: "SOL", start: 22, relativeStart: 0.4314 },
+              { text: "FA", start: 41, relativeStart: 0.8039 },
+              { text: "DO", start: 49, relativeStart: 0.9608 },
+            ],
+          },
+          { kind: "lyrics", text: "Te adoro a ti Señor, te adoro a ti." },
+        ],
+      };
+
+      const body = document.querySelector("#body");
+
+      song.rows.forEach((row) => {
+        const rowNode = document.createElement("div");
+        rowNode.className = `row ${row.kind}`;
+
+        if (row.kind === "chords") {
+          const line = document.createElement("div");
+          line.className = "chord-line";
+          row.chords.forEach((chord) => {
+            const token = document.createElement("span");
+            token.className = "chord-token";
+            token.textContent = chord.text;
+            token.style.left = `${Math.max(0, Math.min(100, chord.relativeStart * 100))}%`;
+            line.appendChild(token);
+          });
+          rowNode.appendChild(line);
+        } else {
+          const line = document.createElement("div");
+          line.className = "lyric-line";
+          line.textContent = row.text;
+          rowNode.appendChild(line);
+        }
+
+        body.appendChild(rowNode);
+      });
+    </script>
+  </body>
+</html>
