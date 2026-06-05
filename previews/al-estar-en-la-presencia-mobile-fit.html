@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ARDE MUSIC | AL ESTAR EN LA PRESENCIA</title>
+    <style>
+      :root{--bg:#f6f1e8;--paper:#fffdf8;--ink:#17191f;--muted:#5d6574;--line:#d9dde5;--accent:#a83d4a;--soft:#f4e3e4}
+      *{box-sizing:border-box} body{margin:0;background:radial-gradient(circle at top left,rgba(168,61,74,.10),transparent 34%),radial-gradient(circle at top right,rgba(17,25,31,.06),transparent 32%),var(--bg);color:var(--ink);font-family:Calibri,"Segoe UI",Arial,sans-serif}
+      .shell{max-width:1200px;margin:0 auto;padding:14px}.card{background:var(--paper);border:1px solid var(--line);border-radius:18px;box-shadow:0 18px 44px rgba(20,25,32,.08)}
+      .hero{display:grid;gap:12px;grid-template-columns:1.35fr .65fr;margin-bottom:12px}.box{padding:16px}.eyebrow{margin:0 0 10px;color:var(--accent);font-size:.78rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+      h1,h2,h3,p{margin-top:0} h1{margin-bottom:8px;font-size:clamp(1.8rem,7vw,2.6rem);line-height:.96}.lede{margin:0;color:var(--muted);font-size:.9rem;line-height:1.42}
+      .meta-grid{display:grid;gap:8px;grid-template-columns:repeat(2,minmax(0,1fr))}.meta{background:#ede8dc;border-radius:14px;padding:10px 12px}.meta span{display:block;font-size:.66rem;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px}.meta strong{display:block;font-size:.84rem}
+      .workspace{display:grid;gap:12px;grid-template-columns:1fr}.panel{padding:14px}.result{border:1px solid var(--line);border-radius:16px;padding:12px;background:linear-gradient(180deg,#fff,#faf7f0)}.result p{margin-bottom:0;color:var(--muted);font-size:.8rem;line-height:1.28}
+      .chip{background:var(--soft);color:var(--accent);padding:5px 9px;font-size:.72rem;display:inline-block;margin:0 6px 6px 0;border-radius:999px;font-weight:800}
+      .preview-header{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px;margin-bottom:10px}.preview-header p{margin-bottom:0;color:var(--muted);font-size:.78rem;line-height:1.28}.badge-row{display:flex;flex-wrap:wrap;gap:6px}.badge{padding:6px 8px;border:1px solid var(--line);background:#fff;font-size:.68rem;border-radius:999px;font-weight:800}
+      .body-card{border:1px solid var(--line);border-radius:18px;overflow:hidden;background:#fff}.section-head{padding:10px 12px;background:#f4f5f7;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:10px;color:var(--muted);font-size:.72rem}.body{padding:12px}
+      .row{display:grid;gap:2px;margin-bottom:7px}.chord-line{position:relative;min-height:16px;font-family:"Courier New",Consolas,monospace;font-size:.68rem;line-height:1}.chord-token{position:absolute;top:0;font-weight:800;color:#1d2430;white-space:nowrap}.lyric-line{font-size:.7rem;line-height:1.03;white-space:nowrap;overflow:hidden;text-overflow:clip}
+      .note{margin-top:10px;padding:10px 12px;border-left:4px solid var(--accent);background:#fbf7f7;border-radius:10px;color:var(--muted);font-size:.76rem;line-height:1.28}
+      @media (max-width:920px){.hero{grid-template-columns:1fr}.panel,.box{padding:12px}}
+    </style>
+  </head>
+  <body>
+    <main class="shell">
+      <section class="hero">
+        <article class="card box">
+          <p class="eyebrow">ARDE MUSIC | Vista móvil</p>
+          <h1>AL ESTAR EN LA PRESENCIA</h1>
+          <p class="lede">Vista compacta para móvil. La canción se conserva en un solo bloque visual con dos renglones por bloque: acordes arriba y letra abajo.</p>
+        </article>
+        <aside class="card box">
+          <p class="eyebrow">Resumen</p>
+          <div class="meta-grid">
+            <div class="meta"><span>Fuente</span><strong>1 columna</strong></div>
+            <div class="meta"><span>Vista</span><strong>1 columna</strong></div>
+            <div class="meta"><span>Bloques</span><strong>1 bloque</strong></div>
+            <div class="meta"><span>PDF</span><strong>1 columna</strong></div>
+          </div>
+        </aside>
+      </section>
+
+      <section class="workspace">
+        <aside class="card panel">
+          <div class="eyebrow">Buscar canción</div>
+          <div class="result">
+            <h3>AL ESTAR EN LA PRESENCIA</h3>
+            <p>HAKUNA | Página 7 | Detectada en ARDE MUSIC.</p>
+            <div style="margin-top:8px"><span class="chip">#alabanza</span><span class="chip">#presencia</span><span class="chip">#adoracion</span></div>
+          </div>
+        </aside>
+
+        <section class="card panel">
+          <header class="preview-header">
+            <div>
+              <p class="eyebrow">Maquetación móvil</p>
+              <h2 style="margin-bottom:4px;font-size:1.25rem">AL ESTAR EN LA PRESENCIA</h2>
+              <p>HAKUNA | Página 7 | Ajuste global por peor caso</p>
+            </div>
+            <div class="badge-row"><span class="badge">Origen 1</span><span class="badge">Vista 1</span><span class="badge">PDF 1</span></div>
+          </header>
+
+          <article class="body-card">
+            <div class="section-head"><span>Bloque 1</span><span>x 387018 | y 117475</span></div>
+            <div class="body" id="body"></div>
+          </article>
+
+          <p class="note">La regla global mide todas las frases y usa la más ancha para fijar un único tamaño de letra en móvil, evitando que una sola línea se parta en dos.</p>
+        </section>
+      </section>
+    </main>
+
+    <script>
+      const rows = [
+        {k:'chords', c:[['DO',.0877],['MIm7',.3684],['LAm',.8421],['LAm7',.9298]]},
+        {k:'lyrics', t:'Al estar en la presencia de tu divinidad'},
+        {k:'chords', c:[['FA',.2388],['REm',.5373],['SOL',.8657],['SOL4',.9403]]},
+        {k:'lyrics', t:'al contemplar la hermosura de tu santidad'},
+        {k:'chords', c:[['DO',0],['MI7',.5],['LAm',.9286]]},
+        {k:'lyrics', t:'mi espíritu se alegra en tu majestad'},
+        {k:'chords', c:[['FA',.25],['REm',.875]]},
+        {k:'lyrics', t:'te adoro a ti'},
+        {k:'chords', c:[['SOL',0]]},
+        {k:'lyrics', t:'te adoro a ti'},
+        {k:'chords', c:[['DO',.2456],['MIm7',.5088],['LAm',.8246],['LAm7',.9298]]},
+        {k:'lyrics', t:'Cuando veo la grandeza de tu dulce amor'},
+        {k:'chords', c:[['FA',.2373],['REm',.4915],['SOL',.8305],['SOL4',.9322]]},
+        {k:'lyrics', t:'y compruebo la pureza de tu corazón'},
+        {k:'chords', c:[['DO',.1739],['MI7',.5435],['LAm',.9348]]},
+        {k:'lyrics', t:'mi espíritu se alegra en tu majestad'},
+        {k:'chords', c:[['FA',.32],['REm',.88]]},
+        {k:'lyrics', t:'te adoro a ti'},
+      ];
+      const body = document.querySelector('#body');
+      for (const row of rows) {
+        const r = document.createElement('div');
+        r.className = `row ${row.k}`;
+        if (row.k === 'chords') {
+          const l = document.createElement('div');
+          l.className = 'chord-line';
+          row.c.forEach(([txt,pos]) => {
+            const s = document.createElement('span');
+            s.className = 'chord-token';
+            s.textContent = txt;
+            s.style.left = `${Math.max(0, Math.min(100, pos * 100))}%`;
+            l.appendChild(s);
+          });
+          r.appendChild(l);
+        } else {
+          const l = document.createElement('div');
+          l.className = 'lyric-line';
+          l.textContent = row.t;
+          r.appendChild(l);
+        }
+        body.appendChild(r);
+      }
+    </script>
+  </body>
+</html>
