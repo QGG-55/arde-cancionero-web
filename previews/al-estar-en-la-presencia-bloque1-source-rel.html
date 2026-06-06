@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ARDE MUSIC | AL ESTAR EN LA PRESENCIA | Bloque 1 referencia</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --bg: #f7f2e8;
+        --paper: #fffdf8;
+        --ink: #17191f;
+        --muted: #5d6574;
+        --line: #d9dde5;
+        --accent: #a83d4a;
+        --soft: #f4e3e4;
+      }
+
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        font-family: Calibri, "Segoe UI", Arial, sans-serif;
+        color: var(--ink);
+        background:
+          radial-gradient(circle at top left, rgba(168,61,74,.10), transparent 34%),
+          radial-gradient(circle at top right, rgba(17,25,31,.06), transparent 32%),
+          var(--bg);
+      }
+
+      .shell { max-width: 720px; margin: 0 auto; padding: 14px; }
+      .card {
+        background: var(--paper);
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        box-shadow: 0 18px 44px rgba(20,25,32,.08);
+      }
+
+      .hero { padding: 16px; margin-bottom: 12px; }
+      .eyebrow {
+        margin: 0 0 10px;
+        color: var(--accent);
+        font-size: .78rem;
+        font-weight: 800;
+        letter-spacing: .08em;
+        text-transform: uppercase;
+      }
+
+      h1, p { margin-top: 0; }
+      h1 { margin-bottom: 8px; font-size: clamp(1.6rem, 7vw, 2.3rem); line-height: .98; }
+      .lede { margin: 0; color: var(--muted); font-size: .9rem; line-height: 1.42; }
+
+      .meta-grid {
+        display: grid;
+        gap: 8px;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        margin-top: 12px;
+      }
+
+      .meta {
+        background: #ede8dc;
+        border-radius: 14px;
+        padding: 10px 12px;
+      }
+
+      .meta span {
+        display: block;
+        font-size: .66rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: .05em;
+        margin-bottom: 4px;
+      }
+
+      .meta strong { display: block; font-size: .84rem; }
+
+      .body-card { overflow: hidden; }
+      .section-head {
+        padding: 10px 12px;
+        background: #f4f5f7;
+        border-bottom: 1px solid var(--line);
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        color: var(--muted);
+        font-size: .72rem;
+      }
+
+      .body { padding: 12px; }
+      .song-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        margin: 0 0 10px;
+      }
+
+      .chip {
+        padding: 5px 9px;
+        border-radius: 999px;
+        background: var(--soft);
+        color: var(--accent);
+        font-size: .72rem;
+        font-weight: 800;
+      }
+
+      .block-frame {
+        display: inline-block;
+        position: relative;
+      }
+
+      .row {
+        display: grid;
+        gap: 2px;
+        margin-bottom: 7px;
+      }
+
+      .row.chords { padding-bottom: 0; }
+
+      .chord-line {
+        position: relative;
+        min-height: 16px;
+        font-family: "Courier New", Consolas, monospace;
+        font-size: .68rem;
+        line-height: 1;
+        width: max-content;
+      }
+
+      .chord-token {
+        position: absolute;
+        top: 0;
+        font-weight: 800;
+        color: #1d2430;
+        white-space: nowrap;
+        transform: translateX(-2px);
+      }
+
+      .lyric-line {
+        display: inline-block;
+        width: max-content;
+        font-size: .7rem;
+        line-height: 1.03;
+        white-space: nowrap;
+      }
+
+      .note {
+        margin-top: 12px;
+        padding: 10px 12px;
+        border-left: 4px solid var(--accent);
+        background: #fbf7f7;
+        border-radius: 10px;
+        color: var(--muted);
+        font-size: .76rem;
+        line-height: 1.28;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="shell">
+      <section class="hero card">
+        <article>
+          <p class="eyebrow">ARDE MUSIC | Bloque 1 referencia</p>
+          <h1>AL ESTAR EN LA PRESENCIA</h1>
+          <p class="lede">
+            Vista móvil solo del primer bloque. El último acorde ya no se fuerza al final del
+            contenedor: se sitúa con su `relativeStart` real, medido sobre el ancho real de la
+            frase.
+          </p>
+          <div class="meta-grid">
+            <div class="meta"><span>Fuente PPT</span><strong>1 columna</strong></div>
+            <div class="meta"><span>Bloque</span><strong>Solo bloque 1</strong></div>
+            <div class="meta"><span>Referencia</span><strong>relativeStart</strong></div>
+            <div class="meta"><span>Métrica</span><strong>Calibri 16 pt</strong></div>
+          </div>
+        </article>
+      </section>
+
+      <section class="card body-card">
+        <div class="section-head">
+          <span>Bloque 1</span>
+          <span>x 387018 | y 117475 | ajuste por referencia real</span>
+        </div>
+        <div class="body">
+          <div class="song-meta">
+            <span class="chip">#alabanza</span>
+            <span class="chip">#presencia</span>
+            <span class="chip">#adoracion</span>
+          </div>
+
+          <div class="block-frame" id="frame">
+            <div class="row chords">
+              <div class="chord-line" id="chord-line">
+                <span class="chord-token" data-rel="0.0877">DO</span>
+                <span class="chord-token" data-rel="0.3684">MIm7</span>
+                <span class="chord-token" data-rel="0.8421">LAm</span>
+                <span class="chord-token" data-rel="0.9298">LAm7</span>
+              </div>
+            </div>
+            <div class="row lyrics">
+              <div class="lyric-line" id="lyric-line">Al estar en la presencia de tu divinidad</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <p class="note">
+        Si la métrica está bien, el `LAm7` debe empezar cerca del final del verso, no pegado al
+        borde derecho. El objetivo aquí es validar esa referencia antes de extenderla al resto.
+      </p>
+    </main>
+
+    <script>
+      const lyricLine = document.getElementById('lyric-line');
+      const chordLine = document.getElementById('chord-line');
+      const frame = document.getElementById('frame');
+
+      function layoutBlock() {
+        const lyricWidth = Math.max(lyricLine.getBoundingClientRect().width, 1);
+        const tokens = Array.from(chordLine.querySelectorAll('.chord-token'));
+
+        chordLine.style.width = `${lyricWidth}px`;
+        frame.style.width = `${lyricWidth}px`;
+
+        tokens.forEach((token) => {
+          const rel = Number(token.dataset.rel || 0);
+          token.style.left = `${rel * lyricWidth}px`;
+        });
+      }
+
+      layoutBlock();
+      window.addEventListener('resize', () => requestAnimationFrame(layoutBlock));
+    </script>
+  </body>
+</html>
